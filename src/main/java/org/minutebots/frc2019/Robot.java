@@ -1,38 +1,30 @@
 package org.minutebots.frc2019;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
+
+Spark leftmotor = new Spark(0); //Declaring motor. "Spark" is how the code refers to the motor controllers that drive motors.
+Spark rightmotor = new Spark (1); //Declaring second motor with a different port. Port is an integer that is required by a constructor.
+Joystick joystick = new Joystick (0); //Declaring our joystick so we can drive our robot. Port is an integer that is required by a constructor.
+DifferentialDrive drivetrain = new DifferentialDrive(leftmotor, rightmotor); //DifferentialDrive is a controller that translates joystick input into robot movement.
+//The constructor requires 2 SpeedControllers, and Spark is a type of SpeedController so it is able to be passed in.
+
   @Override
-  public void robotInit() {
+  public void teleopPeriodic() { //Code in the brackets gets executed every 20ms.
+    drivetrain.curvatureDrive(-joystick.getY(), joystick.getX(),joystick.getRawButton(1)); 
+    //We're passing in input into the this method, it needs it to be able to execute and move the motors.
   }
 
   @Override
-  public void autonomousInit() {
+  public void testInit() { //This adds all the motors to a user interface called Smart Dashboard (we use Shuffleboard, which is compatible), so we can control each motor manually.
+    SmartDashboard.putData(leftmotor);
+    SmartDashboard.putData(rightmotor);
+    SmartDashboard.putData(drivetrain);
   }
-
-  @Override
-  public void autonomousPeriodic() {
-  }
-
-  @Override
-  public void teleopInit() {
-  }
-
-  @Override
-  public void teleopPeriodic() {
-  }
-
-  @Override
-  public void testInit() {
-  }
-
-  @Override
-  public void testPeriodic() {
-  }
-
 }
