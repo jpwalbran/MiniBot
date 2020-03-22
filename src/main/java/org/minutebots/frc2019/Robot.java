@@ -5,9 +5,6 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.CvSink;
 
 public class Robot extends TimedRobot {
     Spark leftmotor = new Spark(0); // Declaring motor. "Spark" is how the code refers to the motor controllers that drive motors.
@@ -17,16 +14,6 @@ public class Robot extends TimedRobot {
     
   @Override
   public void teleopInit() {
-      new Thread(() -> {
-          UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(); // We start a server at: 10.45.36.0:1181
-          camera.setResolution(640, 480);
-          
-          CvSink cvSink = CameraServer.getInstance().getVideo();
-          
-          while(!Thread.interrupted()) {
-              SmartDashboard.putData(cvSink); // Possibly the correct way to stream data to Shuffleboard? haven't checked the docs :)
-          }
-      }).start();
   }
   
   @Override
