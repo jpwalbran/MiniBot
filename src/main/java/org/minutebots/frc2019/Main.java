@@ -17,6 +17,7 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    RobotBase.startRobot(Robot::new);
+    //the Robot::new is a syntax for passing in the constructor of the Robot class (that preserves the object as well)
+    RobotBase.startRobot(Robot::new); 
   }
 }
